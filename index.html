@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meu Painel E-Ink</title>
+  <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+
+  <!-- Barra Superior -->
+  <header class="barra-topo">
+    <span>Meu Kindle OS</span>
+    <button onclick="abrirTela('menu')">Início</button>
+  </header>
+
+  <!-- Tela 1: Menu Principal -->
+  <main id="tela-menu" class="tela ativa">
+    <div class="grade-apps">
+      <button class="icone-app" onclick="abrirTela('notas')">📝 Notas</button>
+      <button class="icone-app" onclick="abrirTela('tarefas')">☑️ Tarefas</button>
+    </div>
+  </main>
+
+  <!-- Tela 2: Bloco de Notas -->
+  <section id="tela-notas" class="tela">
+    <h2>Bloco de Notas</h2>
+    <textarea id="campo-nota" rows="10" placeholder="Escreva aqui..."></textarea>
+    <button class="btn-grande" onclick="salvarNota()">Salvar Nota</button>
+  </section>
+
+  <!-- Tela 3: Lista de Tarefas -->
+  <section id="tela-tarefas" class="tela">
+    <h2>Tarefas</h2>
+    <input type="text" id="nova-tarefa" placeholder="Nova tarefa...">
+    <button class="btn-grande" onclick="adicionarTarefa()">Adicionar</button>
+    <ul id="lista-tarefas"></ul>
+  </section>
+
+  <script src="app.js"></script>
+</body>
+</html>
