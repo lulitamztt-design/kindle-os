@@ -1,37 +1,39 @@
 function abrirTela(nomeTela) {
-  const telas = document.querySelectorAll('.tela');
-  telas.forEach(tela => tela.classList.remove('ativa'));
+  var telas = document.querySelectorAll('.tela');
+  for (var i = 0; i < telas.length; i++) {
+    telas[i].classList.remove('ativa');
+  }
   document.getElementById('tela-' + nomeTela).classList.add('ativa');
 }
 
-// Bloco de Notas
-const campoNota = document.getElementById('campo-nota');
-campoNota.value = localStorage.getItem('minha_nota') || '';
+// --- BLOCO DE NOTAS ---
+var campoNota = document.getElementById('campo-nota');
+if (campoNota) {
+  campoNota.value = localStorage.getItem('minha_nota') || '';
+}
 
 function salvarNota() {
   localStorage.setItem('minha_nota', campoNota.value);
   alert('Nota salva!');
 }
 
-// Lista de Tarefas
-let tarefas = JSON.parse(localStorage.getItem('minhas_tarefas')) || [];
+// --- LISTA DE TAREFAS ---
+var tarefas = JSON.parse(localStorage.getItem('minhas_tarefas')) || [];
 
 function renderizarTarefas() {
-  const lista = document.getElementById('lista-tarefas');
+  var lista = document.getElementById('lista-tarefas');
+  if (!lista) return;
   lista.innerHTML = '';
 
-  tarefas.forEach((tarefa, index) => {
-    const item = document.createElement('li');
-    item.innerHTML = `
-      <span>${tarefa}</span>
-      <button onclick="removerTarefa(${index})">X</button>
-    `;
+  for (var i = 0; i < tarefas.length; i++) {
+    var item = document.createElement('li');
+    item.innerHTML = '<span>' + tarefas[i] + '</span><button onclick="removerTarefa(' + i + ')">X</button>';
     lista.appendChild(item);
-  });
+  }
 }
 
 function adicionarTarefa() {
-  const input = document.getElementById('nova-tarefa');
+  var input = document.getElementById('nova-tarefa');
   if (input.value.trim() === '') return;
 
   tarefas.push(input.value);
@@ -46,9 +48,13 @@ function removerTarefa(index) {
   renderizarTarefas();
 }
 
-// --- LÓGICA DA CALCULADORA ---
+renderizarTarefas();
+
+// --- CALCULADORA ---
 function digitarCalc(valor) {
-  document.getElementById('visor-calc').value += valor;
+  var visor = document.getElementById('visor-calc');
+  if (visor.value === 'Erro') visor.value = '';
+  visor.value = visor.value + valor;
 }
 
 function limparCalc() {
@@ -56,19 +62,19 @@ function limparCalc() {
 }
 
 function calcularResultado() {
-  const visor = document.getElementById('visor-calc');
+  var visor = document.getElementById('visor-calc');
   try {
     visor.value = eval(visor.value);
-  } catch {
+  } catch (e) {
     visor.value = 'Erro';
   }
 }
 
-// --- LÓGICA DO JOGO JOKENPÔ ---
+// --- JOGO JOKENPÔ ---
 function jogar(escolhaUsuario) {
-  const opcoes = ['Pedra', 'Papel', 'Tesoura'];
-  const escolhaKindle = opcoes[Math.floor(Math.random() * 3)];
-  let resultado = '';
+  var opcoes = ['Pedra', 'Papel', 'Tesoura'];
+  var escolhaKindle = opcoes[Math.floor(Math.random() * 3)];
+  var resultado = '';
 
   if (escolhaUsuario === escolhaKindle) {
     resultado = 'Empate!';
@@ -83,7 +89,5 @@ function jogar(escolhaUsuario) {
   }
 
   document.getElementById('resultado-jogo').innerText = 
-    `Você: ${escolhaUsuario} | Kindle: ${escolhaKindle} -> ${resultado}`;
+    'Você: ' + escolhaUsuario + ' | Kindle: ' + escolhaKindle + ' -> ' + resultado;
 }
-
-renderizarTarefas();
