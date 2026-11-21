@@ -38,6 +38,41 @@
     <button class="btn-grande" onclick="adicionarTarefa()">Adicionar</button>
     <ul id="lista-tarefas"></ul>
   </section>
+  
+    <!-- Tela 4: Calculadora -->
+  <section id="tela-calc" class="tela">
+    <h2>Calculadora</h2>
+    <input type="text" id="visor-calc" readonly placeholder="0">
+    <div class="grade-apps">
+      <button onclick="digitarCalc('7')">7</button>
+      <button onclick="digitarCalc('8')">8</button>
+      <button onclick="digitarCalc('9')">9</button>
+      <button onclick="digitarCalc('/')">÷</button>
+      <button onclick="digitarCalc('4')">4</button>
+      <button onclick="digitarCalc('5')">5</button>
+      <button onclick="digitarCalc('6')">6</button>
+      <button onclick="digitarCalc('*')">×</button>
+      <button onclick="digitarCalc('1')">1</button>
+      <button onclick="digitarCalc('2')">2</button>
+      <button onclick="digitarCalc('3')">3</button>
+      <button onclick="digitarCalc('-')">-</button>
+      <button onclick="limparCalc()">C</button>
+      <button onclick="digitarCalc('0')">0</button>
+      <button onclick="calcularResultado()">=</button>
+      <button onclick="digitarCalc('+')">+</button>
+    </div>
+  </section>
+
+  <!-- Tela 5: Jogo Pedra, Papel e Tesoura -->
+  <section id="tela-jogo" class="tela">
+    <h2>Pedra, Papel, Tesoura</h2>
+    <p id="resultado-jogo" style="margin: 16px 0; font-size: 18px;">Escolha sua jogada:</p>
+    <div class="grade-apps">
+      <button onclick="jogar('Pedra')">✊ Pedra</button>
+      <button onclick="jogar('Papel')">✋ Papel</button>
+      <button onclick="jogar('Tesoura')">✌️ Tesoura</button>
+    </div>
+  </section>
 
   <script src="app.js"></script>
 </body>
