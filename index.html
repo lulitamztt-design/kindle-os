@@ -5,6 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Meu Painel E-Ink</title>
   <link rel="stylesheet" href="estilo.css">
+  <style>
+    /* Estilos extras para os novos jogos e ferramentas */
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; max-width: 300px; margin: 16px auto; }
+    .celula-velha { height: 80px; font-size: 32px; font-weight: bold; }
+    
+    .grid-sudoku { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; max-width: 280px; margin: 16px auto; border: 3px solid #000; padding: 4px; }
+    .celula-sudoku { width: 100%; height: 60px; text-align: center; font-size: 24px; font-weight: bold; border: 2px solid #000; margin: 0; padding: 0; }
+    .celula-sudoku[readonly] { background: #E0E0E0; }
+
+    .grid-labirinto { display: grid; grid-template-columns: repeat(7, 1fr); width: 280px; margin: 16px auto; border: 3px solid #000; }
+    .celula-lab { height: 40px; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: bold; }
+    .parede { background: #000; color: #000; }
+    .controles-lab { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; max-width: 240px; margin: 10px auto; }
+
+    .grid-caca { display: grid; grid-template-columns: repeat(8, 1fr); gap: 2px; max-width: 320px; margin: 16px auto; }
+    .letra-caca { padding: 8px 0; font-size: 16px; border: 1px solid #000; }
+    .letra-caca.selecionada { background: #000; color: #FFF; }
+    .letra-caca.encontrada { background: #CCCCCC; text-decoration: line-through; }
+
+    .teclado-forca { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-top: 16px; }
+    .tecla-forca { padding: 10px 4px; font-size: 16px; }
+    .tecla-forca:disabled { background: #E0E0E0; color: #888; border-color: #888; }
+
+    .grid-cal { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; margin-top: 12px; }
+    .dia-cal { border: 1px solid #000; padding: 8px 0; font-size: 16px; }
+    .dia-hoje { background: #000; color: #FFF; font-weight: bold; }
+    
+    .visor-tempo { font-size: 48px; font-weight: bold; text-align: center; margin: 24px 0; border: 3px solid #000; padding: 16px; }
+  </style>
 </head>
 <body>
 
@@ -20,7 +49,14 @@
       <button class="icone-app" onclick="abrirTela('notas')">📝 Notas</button>
       <button class="icone-app" onclick="abrirTela('tarefas')">☑️ Tarefas</button>
       <button class="icone-app" onclick="abrirTela('calc')">🧮 Calculadora</button>
+      <button class="icone-app" onclick="abrirTela('calendario')">📅 Calendário</button>
+      <button class="icone-app" onclick="abrirTela('cronometro')">⏱️ Cronômetro</button>
       <button class="icone-app" onclick="abrirTela('jogo')">✊ Jokenpô</button>
+      <button class="icone-app" onclick="abrirTela('velha')">❌ Jogo da Velha</button>
+      <button class="icone-app" onclick="abrirTela('sudoku')">🔢 Sudoku 4x4</button>
+      <button class="icone-app" onclick="abrirTela('labirinto')">🌀 Labirinto</button>
+      <button class="icone-app" onclick="abrirTela('caca')">🔍 Caça-Palavras</button>
+      <button class="icone-app" onclick="abrirTela('forca')">🪢 Forca</button>
     </div>
   </main>
 
@@ -43,7 +79,7 @@
   <section id="tela-calc" class="tela">
     <h2>Calculadora</h2>
     <input type="text" id="visor-calc" readonly placeholder="0">
-    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 8px;">
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;">
       <button onclick="digitarCalc('7')">7</button>
       <button onclick="digitarCalc('8')">8</button>
       <button onclick="digitarCalc('9')">9</button>
@@ -63,7 +99,31 @@
     </div>
   </section>
 
-  <!-- Tela 5: Jogo Pedra, Papel e Tesoura -->
+  <!-- Tela 5: Calendário -->
+  <section id="tela-calendario" class="tela">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <button onclick="mudarMes(-1)">&lt;</button>
+      <h2 id="titulo-mes">Mês</h2>
+      <button onclick="mudarMes(1)">&gt;</button>
+    </div>
+    <div class="grid-cal" id="dias-semana">
+      <b>D</b><b>S</b><b>T</b><b>Q</b><b>Q</b><b>S</b><b>S</b>
+    </div>
+    <div class="grid-cal" id="grade-calendario"></div>
+  </section>
+
+  <!-- Tela 6: Cronômetro -->
+  <section id="tela-cronometro" class="tela">
+    <h2>Cronômetro</h2>
+    <div id="visor-crono" class="visor-tempo">00:00</div>
+    <div class="grade-apps">
+      <button onclick="iniciarCrono()">Iniciar</button>
+      <button onclick="pausarCrono()">Pausar</button>
+      <button onclick="zerarCrono()" style="grid-column: span 2;">Zerar</button>
+    </div>
+  </section>
+
+  <!-- Tela 7: Jokenpô -->
   <section id="tela-jogo" class="tela">
     <h2>Pedra, Papel, Tesoura</h2>
     <p id="resultado-jogo" style="margin: 16px 0; font-size: 18px; font-weight: bold;">Escolha sua jogada:</p>
@@ -74,6 +134,58 @@
     </div>
   </section>
 
+  <!-- Tela 8: Jogo da Velha -->
+  <section id="tela-velha" class="tela">
+    <h2>Jogo da Velha (Você: X)</h2>
+    <p id="status-velha" style="margin-top: 8px; font-weight: bold;">Sua vez!</p>
+    <div class="grid-3" id="tabuleiro-velha"></div>
+    <button class="btn-grande" style="width: 100%;" onclick="iniciarVelha()">Reiniciar Jogo</button>
+  </section>
+
+  <!-- Tela 9: Sudoku 4x4 -->
+  <section id="tela-sudoku" class="tela">
+    <h2>Sudoku Mini (1 a 4)</h2>
+    <p id="status-sudoku" style="margin-top: 8px;">Preencha sem repetir na linha, coluna ou bloco 2x2.</p>
+    <div class="grid-sudoku" id="tabuleiro-sudoku"></div>
+    <div class="grade-apps">
+      <button onclick="verificarSudoku()">Verificar</button>
+      <button onclick="gerarSudoku()">Novo Jogo</button>
+    </div>
+  </section>
+
+  <!-- Tela 10: Labirinto -->
+  <section id="tela-labirinto" class="tela">
+    <h2>Labirinto (Leve 😊 até 🏁)</h2>
+    <p id="status-lab" style="margin-top: 8px; font-weight: bold;">Use os botões para andar:</p>
+    <div class="grid-labirinto" id="mapa-labirinto"></div>
+    <div class="controles-lab">
+      <div></div>
+      <button onclick="moverLab(-1, 0)">▲</button>
+      <div></div>
+      <button onclick="moverLab(0, -1)">◀</button>
+      <button onclick="moverLab(1, 0)">▼</button>
+      <button onclick="moverLab(0, 1)">▶</button>
+    </div>
+    <button class="btn-grande" style="width: 100%; margin-top: 8px;" onclick="iniciarLabirinto()">Trocar Mapa</button>
+  </section>
+
+  <!-- Tela 11: Caça-Palavras -->
+  <section id="tela-caca" class="tela">
+    <h2>Caça-Palavras</h2>
+    <p id="lista-palavras-caca" style="margin: 8px 0; font-weight: bold;"></p>
+    <div class="grid-caca" id="tabuleiro-caca"></div>
+    <button class="btn-grande" style="width: 100%;" onclick="iniciarCaca()">Novo Tabuleiro</button>
+  </section>
+
+  <!-- Tela 12: Jogo da Forca -->
+  <section id="tela-forca" class="tela">
+    <h2>Jogo da Forca</h2>
+    <p id="vidas-forca" style="margin-top: 8px; font-weight: bold;">Erros restantes: 6</p>
+    <div id="palavra-forca" style="font-size: 28px; letter-spacing: 6px; margin: 20px 0; font-weight: bold; text-align: center;"></div>
+    <div class="teclado-forca" id="teclado-forca"></div>
+    <button class="btn-grande" style="width: 100%; margin-top: 16px;" onclick="iniciarForca()">Nova Palavra</button>
+  </section>
+
   <script>
     function abrirTela(nomeTela) {
       var telas = document.querySelectorAll('.tela');
@@ -81,94 +193,24 @@
         telas[i].classList.remove('ativa');
       }
       document.getElementById('tela-' + nomeTela).classList.add('ativa');
+      
+      if (nomeTela === 'calendario') renderizarCalendario();
+      if (nomeTela === 'velha' && !velhaIniciada) iniciarVelha();
+      if (nomeTela === 'sudoku' && !sudokuIniciado) gerarSudoku();
+      if (nomeTela === 'labirinto' && !labIniciado) iniciarLabirinto();
+      if (nomeTela === 'caca' && !cacaIniciado) iniciarCaca();
+      if (nomeTela === 'forca' && !forcaIniciada) iniciarForca();
     }
 
     // --- BLOCO DE NOTAS ---
     var campoNota = document.getElementById('campo-nota');
-    if (campoNota) {
-      campoNota.value = localStorage.getItem('minha_nota') || '';
-    }
-
+    if (campoNota) campoNota.value = localStorage.getItem('minha_nota') || '';
     function salvarNota() {
       localStorage.setItem('minha_nota', campoNota.value);
       alert('Nota salva!');
     }
 
-    // --- LISTA DE TAREFAS ---
+    // --- TAREFAS ---
     var tarefas = JSON.parse(localStorage.getItem('minhas_tarefas')) || [];
-
     function renderizarTarefas() {
-      var lista = document.getElementById('lista-tarefas');
-      if (!lista) return;
-      lista.innerHTML = '';
-
-      for (var i = 0; i < tarefas.length; i++) {
-        var item = document.createElement('li');
-        item.innerHTML = '<span>' + tarefas[i] + '</span><button onclick="removerTarefa(' + i + ')">X</button>';
-        lista.appendChild(item);
-      }
-    }
-
-    function adicionarTarefa() {
-      var input = document.getElementById('nova-tarefa');
-      if (input.value.trim() === '') return;
-
-      tarefas.push(input.value);
-      localStorage.setItem('minhas_tarefas', JSON.stringify(tarefas));
-      input.value = '';
-      renderizarTarefas();
-    }
-
-    function removerTarefa(index) {
-      tarefas.splice(index, 1);
-      localStorage.setItem('minhas_tarefas', JSON.stringify(tarefas));
-      renderizarTarefas();
-    }
-
-    renderizarTarefas();
-
-    // --- CALCULADORA ---
-    function digitarCalc(valor) {
-      var visor = document.getElementById('visor-calc');
-      if (visor.value === 'Erro') visor.value = '';
-      visor.value = visor.value + valor;
-    }
-
-    function limparCalc() {
-      document.getElementById('visor-calc').value = '';
-    }
-
-    function calcularResultado() {
-      var visor = document.getElementById('visor-calc');
-      try {
-        visor.value = eval(visor.value);
-      } catch (e) {
-        visor.value = 'Erro';
-      }
-    }
-
-    // --- JOGO JOKENPÔ ---
-    function jogar(escolhaUsuario) {
-      var opcoes = ['Pedra', 'Papel', 'Tesoura'];
-      var escolhaKindle = opcoes[Math.floor(Math.random() * 3)];
-      var resultado = '';
-
-      if (escolhaUsuario === escolhaKindle) {
-        resultado = 'Empate!';
-      } else if (
-        (escolhaUsuario === 'Pedra' && escolhaKindle === 'Tesoura') ||
-        (escolhaUsuario === 'Papel' && escolhaKindle === 'Pedra') ||
-        (escolhaUsuario === 'Tesoura' && escolhaKindle === 'Papel')
-      ) {
-        resultado = 'Você venceu!';
-      } else {
-        resultado = 'O Kindle venceu!';
-      }
-
-      document.getElementById('resultado-jogo').innerText = 
-        'Você: ' + escolhaUsuario + ' | Kindle: ' + escolhaKindle + ' -> ' + resultado;
-    }
-  </script>
-</body>
-</html>
 
