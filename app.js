@@ -46,8 +46,6 @@ function removerTarefa(index) {
   renderizarTarefas();
 }
 
-renderizarTarefas();
-
 // --- LÓGICA DA CALCULADORA ---
 function digitarCalc(valor) {
   document.getElementById('visor-calc').value += valor;
@@ -88,3 +86,4 @@ function jogar(escolhaUsuario) {
     `Você: ${escolhaUsuario} | Kindle: ${escolhaKindle} -> ${resultado}`;
 }
 
+renderizarTarefas();
