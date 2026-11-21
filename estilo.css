@@ -1,0 +1,73 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: monospace, sans-serif;
+}
+
+body {
+  background-color: #FFFFFF;
+  color: #000000;
+  padding: 16px;
+}
+
+.barra-topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 3px solid #000000;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.tela {
+  display: none;
+}
+
+.tela.ativa {
+  display: block;
+}
+
+.grade-apps {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.icone-app, .btn-grande, button {
+  background: #FFFFFF;
+  color: #000000;
+  border: 3px solid #000000;
+  padding: 16px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.icone-app:active, button:active {
+  background: #000000;
+  color: #FFFFFF;
+}
+
+textarea, input {
+  width: 100%;
+  border: 3px solid #000000;
+  padding: 12px;
+  font-size: 18px;
+  margin: 12px 0;
+}
+
+ul {
+  list-style: none;
+  margin-top: 16px;
+}
+
+li {
+  border-bottom: 2px solid #000000;
+  padding: 12px 0;
+  font-size: 18px;
+  display: flex;
+  justify-content: space-between;
+}
