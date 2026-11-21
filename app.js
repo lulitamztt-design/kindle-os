@@ -1,0 +1,49 @@
+function abrirTela(nomeTela) {
+  const telas = document.querySelectorAll('.tela');
+  telas.forEach(tela => tela.classList.remove('ativa'));
+  document.getElementById('tela-' + nomeTela).classList.add('ativa');
+}
+
+// Bloco de Notas
+const campoNota = document.getElementById('campo-nota');
+campoNota.value = localStorage.getItem('minha_nota') || '';
+
+function salvarNota() {
+  localStorage.setItem('minha_nota', campoNota.value);
+  alert('Nota salva!');
+}
+
+// Lista de Tarefas
+let tarefas = JSON.parse(localStorage.getItem('minhas_tarefas')) || [];
+
+function renderizarTarefas() {
+  const lista = document.getElementById('lista-tarefas');
+  lista.innerHTML = '';
+
+  tarefas.forEach((tarefa, index) => {
+    const item = document.createElement('li');
+    item.innerHTML = `
+      <span>${tarefa}</span>
+      <button onclick="removerTarefa(${index})">X</button>
+    `;
+    lista.appendChild(item);
+  });
+}
+
+function adicionarTarefa() {
+  const input = document.getElementById('nova-tarefa');
+  if (input.value.trim() === '') return;
+
+  tarefas.push(input.value);
+  localStorage.setItem('minhas_tarefas', JSON.stringify(tarefas));
+  input.value = '';
+  renderizarTarefas();
+}
+
+function removerTarefa(index) {
+  tarefas.splice(index, 1);
+  localStorage.setItem('minhas_tarefas', JSON.stringify(tarefas));
+  renderizarTarefas();
+}
+
+renderizarTarefas();
