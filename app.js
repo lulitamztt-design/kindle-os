@@ -47,3 +47,44 @@ function removerTarefa(index) {
 }
 
 renderizarTarefas();
+
+// --- LÓGICA DA CALCULADORA ---
+function digitarCalc(valor) {
+  document.getElementById('visor-calc').value += valor;
+}
+
+function limparCalc() {
+  document.getElementById('visor-calc').value = '';
+}
+
+function calcularResultado() {
+  const visor = document.getElementById('visor-calc');
+  try {
+    visor.value = eval(visor.value);
+  } catch {
+    visor.value = 'Erro';
+  }
+}
+
+// --- LÓGICA DO JOGO JOKENPÔ ---
+function jogar(escolhaUsuario) {
+  const opcoes = ['Pedra', 'Papel', 'Tesoura'];
+  const escolhaKindle = opcoes[Math.floor(Math.random() * 3)];
+  let resultado = '';
+
+  if (escolhaUsuario === escolhaKindle) {
+    resultado = 'Empate!';
+  } else if (
+    (escolhaUsuario === 'Pedra' && escolhaKindle === 'Tesoura') ||
+    (escolhaUsuario === 'Papel' && escolhaKindle === 'Pedra') ||
+    (escolhaUsuario === 'Tesoura' && escolhaKindle === 'Papel')
+  ) {
+    resultado = 'Você venceu!';
+  } else {
+    resultado = 'O Kindle venceu!';
+  }
+
+  document.getElementById('resultado-jogo').innerText = 
+    `Você: ${escolhaUsuario} | Kindle: ${escolhaKindle} -> ${resultado}`;
+}
+
