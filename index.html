@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jogos e ferramentas para kindle</title>
-  <link rel="stylesheet" href="estilo.css">
+  <title>Meu Painel E-Ink</title>
+  <link rel="stylesheet" href="estilo.css?v=2">
 </head>
 <body>
 
   <!-- Barra Superior -->
   <header class="barra-topo">
-    <span>Painel</span>
+    <span>Meu Kindle OS</span>
     <button onclick="abrirTela('menu')">Início</button>
   </header>
 
@@ -19,8 +19,8 @@
     <div class="grade-apps">
       <button class="icone-app" onclick="abrirTela('notas')">📝 Notas</button>
       <button class="icone-app" onclick="abrirTela('tarefas')">☑️ Tarefas</button>
-      <button class="icone-app" onclick="abrirTela('calc')">🧮Calculadora</button>
-      <button class="icone-app" onclick="abrirTela('jogo')">👊🖐✌ ~Pedra, papel e tesoura</button>
+      <button class="icone-app" onclick="abrirTela('calc')">🧮 Calculadora</button>
+      <button class="icone-app" onclick="abrirTela('jogo')">✊ Jokenpô</button>
     </div>
   </main>
 
@@ -38,12 +38,12 @@
     <button class="btn-grande" onclick="adicionarTarefa()">Adicionar</button>
     <ul id="lista-tarefas"></ul>
   </section>
-  
-    <!-- Tela 4: Calculadora -->
+
+  <!-- Tela 4: Calculadora -->
   <section id="tela-calc" class="tela">
     <h2>Calculadora</h2>
     <input type="text" id="visor-calc" readonly placeholder="0">
-    <div class="grade-apps">
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 8px;">
       <button onclick="digitarCalc('7')">7</button>
       <button onclick="digitarCalc('8')">8</button>
       <button onclick="digitarCalc('9')">9</button>
@@ -66,7 +66,7 @@
   <!-- Tela 5: Jogo Pedra, Papel e Tesoura -->
   <section id="tela-jogo" class="tela">
     <h2>Pedra, Papel, Tesoura</h2>
-    <p id="resultado-jogo" style="margin: 16px 0; font-size: 18px;">Escolha sua jogada:</p>
+    <p id="resultado-jogo" style="margin: 16px 0; font-size: 18px; font-weight: bold;">Escolha sua jogada:</p>
     <div class="grade-apps">
       <button onclick="jogar('Pedra')">✊ Pedra</button>
       <button onclick="jogar('Papel')">✋ Papel</button>
@@ -74,6 +74,7 @@
     </div>
   </section>
 
-  <script src="app.js"></script>
+  <script src="app.js?v=2"></script>
 </body>
 </html>
+
