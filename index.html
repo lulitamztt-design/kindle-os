@@ -6,7 +6,6 @@
   <title>Meu Painel E-Ink</title>
   <link rel="stylesheet" href="estilo.css">
   <style>
-    /* Estilos extras para os novos jogos e ferramentas */
     .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; max-width: 300px; margin: 16px auto; }
     .celula-velha { height: 80px; font-size: 32px; font-weight: bold; }
     
@@ -213,4 +212,5 @@
     // --- TAREFAS ---
     var tarefas = JSON.parse(localStorage.getItem('minhas_tarefas')) || [];
     function renderizarTarefas() {
+      var lista = document.getElementById('lista-tarefas');
 
